@@ -28,7 +28,7 @@ public class SecSql {
 	public SecSql append(Object... args) {
 		if (args.length > 0) {
 			String sqlBit = (String) args[0];
-			sqlBuilder.append(sqlBit + " ");
+			sqlBuilder.append(sqlBit + " "); // 띄어쓰기 안해도됨
 		}
 
 		for (int i = 1; i < args.length; i++) {
