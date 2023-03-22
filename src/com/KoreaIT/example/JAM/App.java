@@ -16,7 +16,7 @@ public class App {
 	public void start() {
 		System.out.println("=프로그램 시작==");
 		Scanner sc = new Scanner(System.in);
-
+		
 		while (true) {
 			System.out.print("명령어 ) ");
 			String cmd = sc.nextLine().trim();
@@ -189,6 +189,91 @@ public class App {
 			DBUtil.delete(conn, sql);
 			
 			System.out.printf("%d번 게시글이 삭제 되었습니다. \n", id);
+		}
+		else if (cmd.equals("member join")) {
+			System.out.println("==회원 가입==");
+			
+			String loginId = null;
+			String loginPw = null;
+			String name = null;
+			String loginPwConfirm = null;
+			
+			while(true) {
+				System.out.printf("로그인 아이디 : ");
+				loginId = sc.nextLine().trim();
+				
+				if(loginId.length()==0) {
+					System.out.println("필수 정보입니다.");
+					continue;
+				}
+				SecSql sql = new SecSql();
+				
+				sql.append("SELECT *");
+				sql.append(" FROM member");
+				sql.append(" WHERE loginId = ?", loginId);
+				
+				Map<String, Object> memberMap = DBUtil.selectRow(conn, sql);
+				
+				if(memberMap.isEmpty()==false) {
+					System.out.println("이미 사용중인 아이디입니다.");
+					continue;
+				}
+				
+				System.out.println("사용 가능한 아이디입니다.");
+				break;
+			}
+			
+			while(true) {
+				System.out.printf("로그인 비밀번호 : ");
+				loginPw = sc.nextLine().trim();
+				
+				if(loginPw.length()==0) {
+					System.out.println("필수 정보입니다.");
+					continue;
+				}
+				
+				while(true) {
+					System.out.printf("로그인 비밀번호 확인 : ");
+					loginPwConfirm = sc.nextLine().trim();
+					
+					if(loginPwConfirm.length()==0) {
+						System.out.println("필수 정보입니다.");
+						continue;
+					}
+					break;
+				}
+				if(loginPw.equals(loginPwConfirm)==false) {
+					System.out.println("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+					continue;
+				}
+				
+				System.out.println("비밀번호가 일치합니다.");
+				break;
+			}
+			
+			while(true) {
+				System.out.printf("이름 : ");
+				name = sc.nextLine().trim();
+				
+				if(name.length()==0) {
+					System.out.println("필수 정보입니다.");
+					continue;
+				}
+				break;
+			}
+			
+			SecSql sql = new SecSql();
+			
+			sql.append("INSERT INTO `member`");
+			sql.append(" SET regDate = NOW()");
+			sql.append(", updateDate = NOW()");
+			sql.append(", loginId = ?", loginId);
+			sql.append(", loginPw = ?", loginPw);
+			sql.append(", `name` = ?", name); 
+			
+			DBUtil.insert(conn, sql);
+
+			System.out.println(name +"님 회원가입되었습니다.");
 		}
 		return 0;
 	}
