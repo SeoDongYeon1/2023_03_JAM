@@ -30,9 +30,8 @@ public class App {
 			String url = "jdbc:mysql://127.0.0.1:3306/JAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 
 			try {
-
 				conn = DriverManager.getConnection(url, "root", "");
-
+				
 				int actionResult = doAction(conn, sc, cmd);
 
 				if (actionResult == -1) {
@@ -57,7 +56,6 @@ public class App {
 	private int doAction(Connection conn, Scanner sc, String cmd) {
 
 		if (cmd.equals("exit")) {
-			System.out.println("프로그램을 종료합니다");
 			return -1;
 		}
 
