@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import com.KoreaIT.example.JAM.util.DBUtil;
 import com.KoreaIT.example.JAM.util.SecSql;
+import com.KoreaIT.example.JAM.util.Util;
 
 public class App {
 
@@ -163,8 +164,8 @@ public class App {
 			System.out.printf("번호 : %d \n", article.id);
 			System.out.printf("제목 : %s \n", article.title);
 			System.out.printf("내용 : %s \n", article.body);
-			System.out.printf("등록날짜 : %s \n", article.regDate);
-			System.out.printf("수정날짜 : %s \n", article.updateDate);
+			System.out.printf("등록날짜 : %s \n", Util.getNowDateTimeStr(article.regDate));
+			System.out.printf("수정날짜 : %s \n", Util.getNowDateTimeStr(article.updateDate));
 		}
 		else if (cmd.startsWith("article delete ")) {
 			int id = Integer.parseInt(cmd.split(" ")[2]);
