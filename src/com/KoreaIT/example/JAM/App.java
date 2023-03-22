@@ -112,12 +112,24 @@ public class App {
 			int id = Integer.parseInt(cmd.split(" ")[2]);
 
 			System.out.println("==게시물 수정==");
+			SecSql sql = new SecSql(); // 게시글 유무 판단
+			sql.append("SELECT COUNT(*)");
+			sql.append(" FROM article");
+			sql.append(" WHERE id = ?", id);
+			
+			int articlesCount = DBUtil.selectRowIntValue(conn, sql);
+			
+			if(articlesCount==0) {
+				System.out.printf("%d번 게시글은 존재하지 않습니다. \n", id);
+				return 0;
+			}
+			
 			System.out.printf("새 제목 : ");
 			String title = sc.nextLine();
 			System.out.printf("새 내용 : ");
 			String body = sc.nextLine();
 
-			SecSql sql = new SecSql();
+			sql = new SecSql();
 
 			sql.append("UPDATE article");
 			sql.append(" SET updateDate = NOW()");
@@ -134,42 +146,25 @@ public class App {
 			int id = Integer.parseInt(cmd.split(" ")[2]);
 			System.out.println("==게시물 상세보기==");
 			
-			List<Article> articles = new ArrayList<>();
-			
-			SecSql sql = new SecSql();
-			
+			SecSql sql = new SecSql(); // 게시글 유무 판단
 			sql.append("SELECT *");
 			sql.append(" FROM article");
 			sql.append(" WHERE id = ?", id);
 			
-			List<Map<String, Object>> articlesListMap = DBUtil.selectRows(conn, sql);
-
-			for (Map<String, Object> articleMap : articlesListMap) {
-				articles.add(new Article(articleMap));
+			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+			
+			if(articleMap.isEmpty()) {
+				System.out.printf("%d번 게시글은 존재하지 않습니다. \n", id);
+				return 0;
 			}
 			
-			Article foundArticle = null;
+			Article article = new Article(articleMap);
 			
-			for(Article article : articles) {
-				if(article.id==id) {
-					foundArticle = article;
-				}
-			}
-//			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
-//			
-//			Article article = new Article(articleMap);
-			
-			if(foundArticle==null) {
-				System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
-			}
-			else {
-				System.out.printf("번호 : %d \n", foundArticle.id);
-				System.out.printf("제목 : %s \n", foundArticle.title);
-				System.out.printf("내용 : %s \n", foundArticle.body);
-				System.out.printf("등록날짜 : %s \n", foundArticle.regDate);
-				System.out.printf("수정날짜 : %s \n", foundArticle.updateDate);
-			}
-			
+			System.out.printf("번호 : %d \n", article.id);
+			System.out.printf("제목 : %s \n", article.title);
+			System.out.printf("내용 : %s \n", article.body);
+			System.out.printf("등록날짜 : %s \n", article.regDate);
+			System.out.printf("수정날짜 : %s \n", article.updateDate);
 		}
 		else if (cmd.startsWith("article delete ")) {
 			int id = Integer.parseInt(cmd.split(" ")[2]);
