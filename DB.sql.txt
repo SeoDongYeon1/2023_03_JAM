@@ -25,4 +25,19 @@ title = 'abcd',
 WHERE id = 2;
 
 # 조회구문
-SELECT * FROM article;
+SELECT * 
+FROM article;
+
+# 상세보기 구문
+SELECT * 
+FROM article
+WHERE id = 2;
+
+# 삭제 구문
+DELETE FROM article 
+WHERE id = 5;
+
+# 게시글 유무 판단 (0이면 x, 1이면 o)
+SELECT COUNT(*) 
+FROM article
+WHERE id = 5;
