@@ -207,16 +207,17 @@ public class App {
 					System.out.println("필수 정보입니다.");
 					continue;
 				}
+				
 				SecSql sql = new SecSql();
 				
-				sql.append("SELECT *");
-				sql.append(" FROM member");
+				sql.append("SELECT COUNT(*) > 0");
+				sql.append(" FROM `member`");
 				sql.append(" WHERE loginId = ?", loginId);
 				
-				Map<String, Object> memberMap = DBUtil.selectRow(conn, sql);
+				boolean isLoginIdDup = DBUtil.selectRowBooleanValue(conn, sql);
 				
-				if(memberMap.isEmpty()==false) {
-					System.out.println("이미 사용중인 아이디입니다.");
+				if(isLoginIdDup) {
+					System.err.println(loginId + "는(은) 이미 사용중인 아이디입니다.");
 					continue;
 				}
 				
