@@ -53,13 +53,9 @@ public class App {
 	}
 
 	private int action(Connection conn, Scanner sc, String cmd) {
-		ArticleController articleController = new ArticleController();
-		articleController.setCon(conn);
-		articleController.setScanner(sc);
+		ArticleController articleController = new ArticleController(conn, sc);
 		
-		MemberController memberController = new MemberController();
-		memberController.setCon(conn);
-		memberController.setScanner(sc);
+		MemberController memberController = new MemberController(conn, sc);
 		
 		if(cmd.length()==0) {
 			System.out.println("명령어를 입력하세요.");
