@@ -9,6 +9,7 @@ public class Article extends Object{ // object는 모든 클래스의 부모(최
 	public LocalDateTime updateDate;
 	public String title;
 	public String body;
+	public int memberId;
 	
 	public Article(int id, String title, String body) {
 		this.id = id; 
@@ -16,12 +17,13 @@ public class Article extends Object{ // object는 모든 클래스의 부모(최
 		this.body = body;
 	}
 	
-	public Article(int id, LocalDateTime regDate, LocalDateTime updateDate, String title, String body) { // 넘겨받은 정보를 객체에 채워넣기
+	public Article(int id, LocalDateTime regDate, LocalDateTime updateDate, String title, String body, int memberId) { // 넘겨받은 정보를 객체에 채워넣기
 		this.id = id; 
 		this.regDate = regDate;
 		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
+		this.memberId = memberId;
 	}
 
 
@@ -31,6 +33,7 @@ public class Article extends Object{ // object는 모든 클래스의 부모(최
 		this.updateDate = (LocalDateTime) articleMap.get("updateDate");
 		this.title = (String) articleMap.get("title");
 		this.body = (String) articleMap.get("body");
+		this.memberId = (int) articleMap.get("memberId");
 	}
 
 	@Override

@@ -50,5 +50,20 @@ public class MemberDao {
 		Member member = new Member(memberMap);
 		return member;
 	}
-	
+
+	public Member getMemberByMemberId(int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT *");
+		sql.append(" FROM `member`");
+		sql.append(" WHERE id = ?", memberId);
+		
+		Map<String, Object> memberMap = DBUtil.selectRow(Container.conn, sql);
+		
+		if(memberMap.isEmpty()) {
+			return null;
+		}
+		
+		Member member = new Member(memberMap);
+		return member;
+	}
 }

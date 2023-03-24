@@ -13,12 +13,13 @@ public class ArticleDao {
 	public ArticleDao() {
 	}
 
-	public int doWrite(String title, String body) {
+	public int doWrite(int memberId, String title, String body) {
 		SecSql sql = new SecSql();
 
 		sql.append("INSERT INTO article");
 		sql.append(" SET regDate = NOW()");
 		sql.append(", updateDate = NOW()");
+		sql.append(", memberId = ?", memberId); // ? 안에 memberId 값이 들어감
 		sql.append(", title = ?", title); // ? 안에 title 값이 들어감
 		sql.append(", `body` = ?", body); // ? 안에 body 값이 들어감
 		return DBUtil.insert(Container.conn, sql);

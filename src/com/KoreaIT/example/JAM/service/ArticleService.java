@@ -13,9 +13,8 @@ public class ArticleService {
 	public ArticleService() {
 		articleDao = Container.articleDao;
 	}
-
-	public int doWrite(String title, String body) {
-		return articleDao.doWrite(title, body);
+	public int doWrite(int memberId, String title, String body) {
+		return articleDao.doWrite(memberId, title, body);
 	}
 
 	public int getArticlesCountById(int id) {
