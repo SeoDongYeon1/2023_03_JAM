@@ -17,6 +17,10 @@ public class ArticleController extends Controller{
 	}
 
 	public void doWrite() {
+		if(Container.session.isLogined()==false) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 		System.out.println("==게시물 작성==");
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
@@ -46,6 +50,10 @@ public class ArticleController extends Controller{
 	}
 
 	public void doModify(String cmd) {
+		if(Container.session.isLogined()==false) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
 		System.out.println("==게시물 수정==");
@@ -88,6 +96,10 @@ public class ArticleController extends Controller{
 	}
 
 	public void doDelete(String cmd) {
+		if(Container.session.isLogined()==false) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 		System.out.println("==게시물 삭제==");
 		
