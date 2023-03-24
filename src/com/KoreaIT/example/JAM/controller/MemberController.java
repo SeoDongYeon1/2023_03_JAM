@@ -128,8 +128,21 @@ public class MemberController extends Controller{
 				continue;
 			}
 			System.out.printf("%s님 로그인 되었습니다. 반갑습니다.\n", member.name);
+			
+			Container.session.loginedMember = member;
+			
 			break;
 		}
+		
 	}
+	
+	public void showProfile() {
+		if(Container.session.loginedMember==null) {
+			System.out.println("로그인 상태가 아닙니다.");
+			return;
+		}
+		System.out.println(Container.session.loginedMember);
+	}
+	
 
 }

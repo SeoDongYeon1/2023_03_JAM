@@ -90,6 +90,9 @@ public class App {
 		else if (cmd.equals("member login")) {
 			memberController.doLogin();
 		}
+		else if (cmd.equals("member profile")) {
+			memberController.showProfile();
+		}
 		else {
 			System.out.println("존재하지 않는 명령어입니다.");
 		}
