@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.KoreaIT.example.JAM.container.Container;
 import com.KoreaIT.example.JAM.controller.ArticleController;
 import com.KoreaIT.example.JAM.controller.MemberController;
 
@@ -12,11 +13,13 @@ public class App {
 
 	public void start() {
 		System.out.println("=프로그램 시작==");
-		Scanner sc = new Scanner(System.in);
+		Container.sc = new Scanner(System.in);
+		
+		Container.init();
 		
 		while (true) {
 			System.out.print("명령어 ) ");
-			String cmd = sc.nextLine().trim();
+			String cmd = Container.sc.nextLine().trim();
 
 			Connection conn = null;
 
@@ -30,8 +33,9 @@ public class App {
 
 			try {
 				conn = DriverManager.getConnection(url, "root", "");
+				Container.conn =conn;
 
-				int actionResult = action(conn, sc, cmd);
+				int actionResult = action(cmd);
 
 				if (actionResult == -1) {
 					System.out.println("프로그램을 종료합니다");
@@ -52,10 +56,9 @@ public class App {
 		}
 	}
 
-	private int action(Connection conn, Scanner sc, String cmd) {
-		ArticleController articleController = new ArticleController(conn, sc);
-		
-		MemberController memberController = new MemberController(conn, sc);
+	private int action(String cmd) {
+		ArticleController articleController = Container.articleController;
+		MemberController memberController = Container.memberController;
 		
 		if(cmd.length()==0) {
 			System.out.println("명령어를 입력하세요.");
