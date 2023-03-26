@@ -1,4 +1,4 @@
-package com.KoreaIT.example.JAM;
+package com.KoreaIT.example.JAM.dto;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -10,6 +10,7 @@ public class Article extends Object{ // object는 모든 클래스의 부모(최
 	public String title;
 	public String body;
 	public int memberId;
+	public String name;
 	
 	public Article(int id, String title, String body) {
 		this.id = id; 
@@ -34,7 +35,17 @@ public class Article extends Object{ // object는 모든 클래스의 부모(최
 		this.title = (String) articleMap.get("title");
 		this.body = (String) articleMap.get("body");
 		this.memberId = (int) articleMap.get("memberId");
+		this.name = (String) articleMap.get("name");
 	}
+	
+//	public Article(Map<String, Object> articleMap) {
+//		this.id = (int) articleMap.get("id");
+//		this.regDate = (LocalDateTime) articleMap.get("regDate");
+//		this.updateDate = (LocalDateTime) articleMap.get("updateDate");
+//		this.title = (String) articleMap.get("title");
+//		this.body = (String) articleMap.get("body");
+//		this.name = (String) articleMap.get("name");
+//	}
 
 	@Override
 	public String toString() {

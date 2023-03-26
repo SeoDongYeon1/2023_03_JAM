@@ -12,7 +12,7 @@ public class JDBCConTest {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://127.0.0.1:3306/JAM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 
-			conn = DriverManager.getConnection(url, "root", "");
+			conn = DriverManager.getConnection(url, "root", "1234");
 			System.out.println("연결 성공!");
 			
 		} catch (ClassNotFoundException e) {

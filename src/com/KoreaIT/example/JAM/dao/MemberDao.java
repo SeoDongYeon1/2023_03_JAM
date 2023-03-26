@@ -2,8 +2,8 @@ package com.KoreaIT.example.JAM.dao;
 
 import java.util.Map;
 
-import com.KoreaIT.example.JAM.Member;
 import com.KoreaIT.example.JAM.container.Container;
+import com.KoreaIT.example.JAM.dto.Member;
 import com.KoreaIT.example.JAM.util.DBUtil;
 import com.KoreaIT.example.JAM.util.SecSql;
 

@@ -1,8 +1,8 @@
 package com.KoreaIT.example.JAM.service;
 
-import com.KoreaIT.example.JAM.Member;
 import com.KoreaIT.example.JAM.container.Container;
 import com.KoreaIT.example.JAM.dao.MemberDao;
+import com.KoreaIT.example.JAM.dto.Member;
 
 public class MemberService {
 	private MemberDao memberDao;

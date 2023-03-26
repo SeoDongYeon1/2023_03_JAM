@@ -7,9 +7,12 @@ CREATE TABLE article(
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
+    memberId INT(11) UNSIGNED NOT NULL,
     title VARCHAR(100) NOT NULL,
-    `body` TEXT NOT NULL    
+    `body` TEXT NOT NULL
 );
+
+DESC article;
 
 # `member` 테이블 생성
 CREATE TABLE `member`(
@@ -25,16 +28,51 @@ CREATE TABLE `member`(
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = CONCAT('제목 ',RAND()),
-`body` = CONCAT('내용 ',RAND());
+title = '제목1',
+`body` ='내용1',
+memberId = 1;
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목2',
+`body` ='내용2',
+memberId = 2;
 
 # `member` 테스트 데이터 생성 구문
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = CONCAT('Test ',RAND()),
-loginPw = CONCAT('Test ',RAND()),
-`name` = CONCAT('Test ',RAND());
+loginId = 'test1',
+loginPw = 'test1',
+`name` = '회원1';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = '회원2';
+
+
+
+###################################################################################################
+
+# 랜덤 게시글 생성
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = CONCAT('제목 ',RAND()),
+`body` = CONCAT('내용 ',RAND()),
+memberId = 1;
+
+# 랜덤 회원 생성
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = CONCAT('test',RAND()),
+loginPw = CONCAT('test',RAND()),
+`name` = CONCAT('회원',RAND());
 
 # `article` 조회구문
 SELECT * 
@@ -68,3 +106,14 @@ WHERE id = 5;
 SELECT COUNT(*) > 0
 FROM `member`
 WHERE loginId = 'test1';
+
+# INNER JOIN
+SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, member.name
+FROM article
+INNER JOIN `member`
+ON article.memberId = `member`.id;
+
+################################
+# 한글오류
+ALTER TABLE article CONVERT TO CHARSET UTF8;
+ALTER TABLE `member` CONVERT TO CHARSET UTF8;

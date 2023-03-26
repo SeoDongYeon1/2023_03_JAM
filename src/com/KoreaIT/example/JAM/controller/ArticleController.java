@@ -3,9 +3,8 @@ package com.KoreaIT.example.JAM.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.KoreaIT.example.JAM.Article;
-import com.KoreaIT.example.JAM.Member;
 import com.KoreaIT.example.JAM.container.Container;
+import com.KoreaIT.example.JAM.dto.Article;
 import com.KoreaIT.example.JAM.service.ArticleService;
 import com.KoreaIT.example.JAM.util.Util;
 
@@ -45,8 +44,7 @@ public class ArticleController extends Controller{
 		}
 		System.out.println("번호   /   제목   / 작성자");
 		for (Article article : articles) {
-			Member member = Container.memberService.getMemberByMemberId(article.memberId);
-			System.out.printf("%3d   /   %s  /  %s \n", article.id, article.title, member.name);
+			System.out.printf("%3d   /   %s  /  %s \n", article.id, article.title, article.name);
 		}
 	}
 
@@ -88,12 +86,11 @@ public class ArticleController extends Controller{
 		}
 		
 		Article article = new Article(articleMap);
-		Member member = Container.memberService.getMemberByMemberId(article.memberId);
-		String writer = member.name;
+		
 		System.out.printf("번호 : %d \n", article.id);
 		System.out.printf("제목 : %s \n", article.title);
 		System.out.printf("내용 : %s \n", article.body);
-		System.out.printf("작성자 : %s \n", writer);
+		System.out.printf("작성자 : %s \n", article.name);
 		System.out.printf("등록날짜 : %s \n", Util.getNowDateTimeStr(article.regDate));
 		System.out.printf("수정날짜 : %s \n", Util.getNowDateTimeStr(article.updateDate));
 	}

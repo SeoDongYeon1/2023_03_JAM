@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.KoreaIT.example.JAM.Article;
 import com.KoreaIT.example.JAM.container.Container;
+import com.KoreaIT.example.JAM.dto.Article;
 import com.KoreaIT.example.JAM.util.DBUtil;
 import com.KoreaIT.example.JAM.util.SecSql;
 
@@ -36,9 +36,11 @@ public class ArticleDao {
 
 	public Map<String, Object> getArticleById(int id) {
 		SecSql sql = new SecSql(); // 게시글 유무 판단
-		sql.append("SELECT *");
-		sql.append(" FROM article");
-		sql.append(" WHERE id = ?", id);
+		sql.append("SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, article.memberId, member.name");
+		sql.append("FROM article");
+		sql.append("INNER JOIN `member`");
+		sql.append("ON article.memberId = `member`.id");
+		sql.append("WHERE article.id = ?", id);
 		
 		return DBUtil.selectRow(Container.conn, sql);
 	}
@@ -66,9 +68,11 @@ public class ArticleDao {
 	public List<Article> getArticles() {
 		SecSql sql = new SecSql();
 
-		sql.append("SELECT *");
+		sql.append("SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, article.memberId, member.name");
 		sql.append("FROM article");
-		sql.append("ORDER BY id DESC;");
+		sql.append("INNER JOIN `member`");
+		sql.append("ON article.memberId = `member`.id");
+		sql.append("ORDER BY id DESC");
 
 		List<Map<String, Object>> articlesListMap = DBUtil.selectRows(Container.conn, sql);
 		
@@ -79,5 +83,5 @@ public class ArticleDao {
 		}
 		return articles;
 	}
-
+	
 }
