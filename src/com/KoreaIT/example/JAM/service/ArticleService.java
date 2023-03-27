@@ -36,5 +36,8 @@ public class ArticleService {
 	public List<Article> getArticles() {
 		return articleDao.getArticles();
 	}
+	public void IncreaseHit(int id) {
+		articleDao.IncreaseHit(id);
+	}
 
 }

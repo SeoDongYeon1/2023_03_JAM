@@ -44,7 +44,7 @@ public class ArticleDao {
 		
 		return DBUtil.selectRow(Container.conn, sql);
 	}
-
+	
 	public void doDelete(int id) {
 		SecSql sql = new SecSql();
 		sql.append("DELETE FROM article");
@@ -62,6 +62,15 @@ public class ArticleDao {
 		sql.append(", `body` = ?", body);
 		sql.append(" WHERE id = ?", id);
 
+		DBUtil.update(Container.conn, sql);
+	}
+	public void IncreaseHit(int id) {
+		SecSql sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		sql.append(" SET hit = hit + 1");
+		sql.append(" WHERE id = ?", id);
+		
 		DBUtil.update(Container.conn, sql);
 	}
 

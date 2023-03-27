@@ -9,9 +9,14 @@ CREATE TABLE article(
     updateDate DATETIME NOT NULL,
     memberId INT(11) UNSIGNED NOT NULL,
     title VARCHAR(100) NOT NULL,
-    `body` TEXT NOT NULL
+    `body` TEXT NOT NULL,
+    hit INT(11) UNSIGNED NOT NULL
 );
 
+# 조회수 칼럼 추가
+ALTER TABLE article ADD COLUMN hit INT(11) UNSIGNED NOT NULL AFTER `body`;
+
+# article 구조 보기
 DESC article;
 
 # `member` 테이블 생성
@@ -108,7 +113,7 @@ FROM `member`
 WHERE loginId = 'test1';
 
 # INNER JOIN
-SELECT article.id, article.regDate, article.updateDate, article.title, article.`body`, member.name
+SELECT article.*, member.name AS 'extra__writer'
 FROM article
 INNER JOIN `member`
 ON article.memberId = `member`.id;

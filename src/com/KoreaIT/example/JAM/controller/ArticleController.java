@@ -42,9 +42,9 @@ public class ArticleController extends Controller{
 			System.out.println("게시글이 없습니다");
 			return;
 		}
-		System.out.println("번호   /   제목   / 작성자");
+		System.out.println("번호   /   제목   /   작성자   / 조회수");
 		for (Article article : articles) {
-			System.out.printf("%3d   /   %s  /  %s \n", article.id, article.title, article.extra__writer);
+			System.out.printf("%3d   /   %s  /    %s     / %d \n", article.id, article.title, article.extra__writer, article.hit);
 		}
 	}
 
@@ -78,6 +78,8 @@ public class ArticleController extends Controller{
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 		System.out.println("==게시물 상세보기==");
 		
+		articleService.IncreaseHit(id);
+		
 		Map<String, Object> articleMap = articleService.getArticleById(id);
 		
 		if(articleMap.isEmpty()) {
@@ -91,6 +93,7 @@ public class ArticleController extends Controller{
 		System.out.printf("제목 : %s \n", article.title);
 		System.out.printf("내용 : %s \n", article.body);
 		System.out.printf("작성자 : %s \n", article.extra__writer);
+		System.out.printf("조회수 : %d \n", article .hit);
 		System.out.printf("등록날짜 : %s \n", Util.getNowDateTimeStr(article.regDate));
 		System.out.printf("수정날짜 : %s \n", Util.getNowDateTimeStr(article.updateDate));
 	}
