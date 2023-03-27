@@ -40,10 +40,16 @@ public class ArticleController extends Controller{
 		int page = 1;
 		String searchKeyword = null;
 		
-		// 몇페이지?
-		if(cmdBits.length >= 3) {
-			page = Integer.parseInt(cmdBits[2]);
+		try {
+			// 몇페이지?
+			if(cmdBits.length >= 3) {
+				page = Integer.parseInt(cmdBits[2]);
+			}
+			
+		} catch (NumberFormatException e) {
+			searchKeyword = cmdBits[2];
 		}
+		
 		// 검색어
 		if(cmdBits.length >= 4) {
 			searchKeyword = cmdBits[3];

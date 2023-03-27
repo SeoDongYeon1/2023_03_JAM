@@ -123,7 +123,7 @@ public class ArticleDao {
 		sql.append("FROM article");
 		sql.append("INNER JOIN `member`");
 		sql.append("ON article.memberId = `member`.id");
-		if(searchKeyword.length() > 0) {
+		if(searchKeyword!=null) {
 			sql.append("WHERE article.title LIKE CONCAT('%',?,'%')", searchKeyword);
 		}
 		sql.append("ORDER BY id DESC");
