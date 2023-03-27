@@ -22,6 +22,8 @@ public class ArticleDao {
 		sql.append(", memberId = ?", memberId); // ? 안에 memberId 값이 들어감
 		sql.append(", title = ?", title); // ? 안에 title 값이 들어감
 		sql.append(", `body` = ?", body); // ? 안에 body 값이 들어감
+		sql.append(", hit = ?", 0); // ? 안에 hit 값이 들어감
+		
 		return DBUtil.insert(Container.conn, sql);
 	}
 
@@ -97,4 +99,46 @@ public class ArticleDao {
 		return articles;
 	}
 	
+	public List<Article> getForPrintArticles(Map<String, Object> args) {
+		SecSql sql = new SecSql();
+		
+		String searchKeyword = null;
+		
+		if(args.containsKey("searchKeyword")) {
+			searchKeyword = (String) args.get("searchKeyword");
+		}
+		
+		int limitFrom = -1;
+		int limitTake = -1;
+		
+		if(args.containsKey("limitFrom")) {
+			limitFrom = (int) args.get("limitFrom");
+		}
+		
+		if(args.containsKey("limitTake")) {
+			limitTake = (int) args.get("limitTake");
+		}
+
+		sql.append("SELECT article.*, member.name AS extra__writer");
+		sql.append("FROM article");
+		sql.append("INNER JOIN `member`");
+		sql.append("ON article.memberId = `member`.id");
+		if(searchKeyword.length() > 0) {
+			sql.append("WHERE article.title LIKE CONCAT('%',?,'%')", searchKeyword);
+		}
+		sql.append("ORDER BY id DESC");
+		if(limitFrom != -1) {
+			sql.append("LIMIT ?, ?;", limitFrom, limitTake);
+		}
+
+		List<Map<String, Object>> articlesListMap = DBUtil.selectRows(Container.conn, sql);
+		
+		List<Article> articles = new ArrayList<>();
+		
+		for (Map<String, Object> articleMap : articlesListMap) {
+			articles.add(new Article(articleMap));
+		}
+		return articles;
+	}
+
 }

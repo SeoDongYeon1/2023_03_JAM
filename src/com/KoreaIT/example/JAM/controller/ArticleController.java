@@ -32,15 +32,32 @@ public class ArticleController extends Controller{
 		System.out.println(id + "번 글이 생성 되었습니다");
 	}
 
-	public void showList() {
+	public void showList(String cmd) {
 		System.out.println("==게시물 목록==");
-
-		List<Article> articles = articleService.getArticles();
+		
+		String[] cmdBits = cmd.split(" ");
+		
+		int page = 1;
+		String searchKeyword = null;
+		
+		// 몇페이지?
+		if(cmdBits.length >= 3) {
+			page = Integer.parseInt(cmdBits[2]);
+		}
+		// 검색어
+		if(cmdBits.length >= 4) {
+			searchKeyword = cmdBits[3];
+		}
+		// 한 페이지에 5개씩
+		int itemsInAPage = 5;
+		
+		List<Article> articles = articleService.getForPrintArticles(page, itemsInAPage, searchKeyword);
 
 		if (articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
 		}
+		
 		System.out.println("번호   /   제목   /   작성자   / 조회수");
 		for (Article article : articles) {
 			System.out.printf("%3d   /   %s  /    %s     / %d \n", article.id, article.title, article.extra__writer, article.hit);

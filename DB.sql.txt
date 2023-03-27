@@ -59,7 +59,12 @@ loginId = 'test2',
 loginPw = 'test2',
 `name` = '회원2';
 
-
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'a',
+loginPw = 'a',
+`name` = 'a';
 
 ###################################################################################################
 
