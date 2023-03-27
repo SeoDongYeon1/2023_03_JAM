@@ -34,7 +34,7 @@ public class ArticleDao {
 		return DBUtil.selectRowIntValue(Container.conn, sql);
 	}
 
-	public Map<String, Object> getArticleById(int id) {
+	public Article getArticleById(int id) {
 		SecSql sql = new SecSql(); // 게시글 유무 판단
 		sql.append("SELECT article.*, member.name AS extra__writer");
 		sql.append("FROM article");
@@ -42,7 +42,11 @@ public class ArticleDao {
 		sql.append("ON article.memberId = `member`.id");
 		sql.append("WHERE article.id = ?", id);
 		
-		return DBUtil.selectRow(Container.conn, sql);
+		if(DBUtil.selectRow(Container.conn, sql).isEmpty()) {
+			return null;
+		}
+		
+		return new Article(DBUtil.selectRow(Container.conn, sql));
 	}
 	
 	public void doDelete(int id) {
